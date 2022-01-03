@@ -36,6 +36,112 @@ public class Operator_06 {
 		
 		// 간단하게 정리하면 long을 제외한 정수 타입 여난은 int 타입으로 산출되고, 피연산자 중 하나라도 실수 타입이면, 실수타입으로 산출된다.
 		
+		byte byte1 = 1;
+		byte byte2 = 1;
+//		byte byte3 = byte1 + byte2; // 컴파일 에러 long 외에 정수의 산술 연산은 무조건 int 타입으로 변환후 연산을 수행하고, 산출 타입이 int이기 때문에 int 타입 변수에 산출 값을 대입해야한다.
+		
+		// 따라서 다음과 같이 수정해야한다.
+		
+		int result1 = byte1 + byte2;
+		
+		// 정수 타입 연산의 결과가 int 타입으로 나오는 이유는 자바 가상 기계(JVM)가 기본적으로 32비트 단위로 계산하기 떄문이다. 다른 예를 들어보자.
+		// 다음 코드에서 result2와 result3에 저장되는 값은 무엇인지 알아보자.
+		
+		int int1 = 10;
+		int int2 = 4;
+		int result2 = int1 / int2;
+		double result3 = int1 / int2;
+		
+		System.out.println("result2 = " + result2);
+		System.out.println("result3 = " + result3);
+		
+		// 상식적으로 생각하면 int1과 int2를 나눗셈 하면 2.5가 나오지만 연산결과는 소수점 이하 부분을 버리고 2만 산출된다. 따라서 result2에는 2가 저장된다. 그렇다면 result3은 double 타입 변수이므로 2.5가 저장될까? 
+		// 정답은 아니다.
+		// 연산후의 결과가 2이므로 2를 실수화해서 2.0이 된다.
+		// 만약 2.5를 산출결과로 얻고 싶다면 피연산자 중 최소한 하나는 실수 타입이어야 한다.
+		
+		double result4 = (int1*1.0) / int2;
+		double result5 = (double) int1/int2;
+		double result6 = int1 / (double) int2;
+		
+		System.out.println("result4 = " + result4);
+		System.out.println("result5 = " + result5);
+		System.out.println("result6 = " + result6);
+		
+		
+		// 오버 플로우 탐지
+		
+		// 산술 연산을 할때 주의할 점은 연산 후의 산출값이 산출 타입으로 충분히 표현 가능한지 살펴봐야 한다.
+		// 산출 타입으로 표현할 수 없는 값이 산출되었을 경우, 오버플로우가 발생하고 쓰레기값 (엉뚱한 값)을 얻을 수 있기 때문이다.
+		
+		
+		
+		// NaN과 Infinity 연산
+		
+		// / 또는 % 연산자를 사용할 때도 주의할 점이 있다. 좌측 피연산자가 정수 타입인 경우 나누는 수인 우측 피연산자는 0을 사용할 수 없다. 만일 0으로 나누면 
+		// 컴파일은 정상적으로 되지만, 실행 시 ArithmeticException(예외)이 발생한다.
+		
+		// 5 / 0 -> ArithmeticException 예외 발생
+		// 5 % 0 -> ArithmeticException 예외 발생
+		
+		// 자바는 프로그램 실행 도중 예외가 발생하면 실행이 즉시 멈추고 프로그램은 종료된다. ArithmeticException이 발생했을 경우 프로그램이 종료되지 않도록 하려면
+		// 예외 처리를 해야한다. 예외가 발생되었을 경우, catch 블록을 실행하도록 하는것이다.
+		
+//		try {
+//			// int z= x / y;
+//			int z= x % y;
+//			System.out.println("z : " + z);
+//		}catch(ArithmeticException e) {
+//			System.out.println("0으로 나누면 안됨");
+//		}
+		
+		// 그러나 실수 타입인 0.0 또는 0.0f로 나누면 ArithmeticException 발생하지 않고, / 연산의 결과는 Infinity (무한대) 값을 가지며, % 연산의 결과는 NaN(Not a Nubmer)을 가진다.
+		
+		// Infinity + 2; => Infinity
+		// NaN + 2; => NaN
+		
+		//프로그램 코드에서 / 와 % 연산의 결과가 Infinity 또는 NaN 인지 확인하려면 Double.isInfinite()와 Double.isNaN()메서드를 서용하면된다.
+		
+		// 이 메서드들은 double 타입의 값을 매개값으로 받아서 이 값이 Infinity 또는 NaN 이라면 true를 리턴하고, 그렇지 않다면 false를 리턴한다.
+		
+		// 연산의 결과가 Infinity 또는 NaN이면 절대로 다음 연산을 수행하지 못하도록 if문을 사용해서 실행 흐름을 변경해야 한다. 
+		
+		
+		/*	if(Double.isInfinite(z) || Double.isNaN(z)){
+		 * 	System.out.println("값 산출 불가");
+		 * 	}else {
+		 * 	System.out.println(z + 2);
+		 * 	}
+		 */
+
+	
+		// 문자열 연결 연산자(+)
+		// 문자열 연결 연산자인 +는 문자열을 서로 결합하는 연산자이다.
+		// + 연산자는 산술 연산자, 부호 연산자인 동시에 문자열 연결 연산자이기도 하다.
+		// 피연산자 중 한쪽이 문자열이면 + 연산자는 문자열 연결 연산자로 사용되어 다른 피연산자를 문자열로 변환하고 서로 결합한다.
+		
+		String str1 = "JDK" + 6.0;
+		String str2 = str1 + " 특징";
+		
+		System.out.println("str2 = " + str2);
+	
+//		3 + 3.0 + "JDK"; 실수로 계산되어 6.0JDK라는 결과가 나온다.
+		
+		
+		// 비교 연산자 (<,<=,>,>=,==,!=)
+		
+		// 구분			연산식					설명
+		// 동등비교		피연산자1 == 피연산자2		두 피연산자의 값이 같은지를 검사
+		// 동등비교		피연산자1 != 피연산자2		두 피연산자의 값이 다른지를 검사
+		// 크기비교		피연산자1 >  피연산자2		피연산자1이 큰지를 검사
+		// 크기비교		피연산자1 >= 피연산자2		피연산자1이 크거나 같은지를 검사
+		// 크기비교		피연산자1 <  피연산자2		피연산자2이 큰지를 검사
+		// 크기비교		피연산자1 <= 피연산자2 		피연산자2이 크거나 같은지를 검사
+		
+		// 만약 피연산자가 char 타입이면 유니코드 값으로 비교 연산을 수행한다.
+		// ('A'<'B') -> ('65'<'66')
+		
+		
 		
 	}
 
