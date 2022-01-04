@@ -8,7 +8,7 @@ public class Operator_Example_16 {
 		
 		int num1 = 10;
 		int num2 = 10;
-		
+		 
 	}
 
 }
