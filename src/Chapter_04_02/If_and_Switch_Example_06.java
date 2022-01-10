@@ -29,7 +29,7 @@ public class If_and_Switch_Example_06 {
 		}
 		
 		// case 끝에 break가 붙어 있는 이유는 다음 case를 실행하지말고 swtich문을 빠져나가기 위해서 사용한다.
-		
+		// break가 없다면 다음 case가 연달아 실행되는데, 이때에는 case 결과는 상관없이 실행된다.
 		
 	}
 
