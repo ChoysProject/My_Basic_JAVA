@@ -24,6 +24,29 @@ public class Constructor_06 {
 		// 자, 그렇다면 다음 코드를 보면서 생성자 오버로딩에서 생기는 중복 코드를 제거해보자.
 		
 		
+//		Car(String model){
+//			this.model = model;
+//			this.color = "은색";
+//			this.maxSpeed = 250;
+//		}
+//		
+//		Car(String model, String color){
+//			this.model = model;
+//			this.color = color;
+//			this.maxSpeed = maxSpeed;
+//		}
+//		
+//		Car(String model, String color, int maxSpeed){
+//			this.model = model;
+//			this.color = color;
+//			this.maxSpeed = maxSpeed;
+//		}
+		
+		// 앞의 코드를 보면 세 개의 생성자 내용이 비슷하므로 앞에 두 개의 생성자에서 this()를 사용해서 마지막 생성자인 Car(String model, String color, int maxSpeed) 를 호출하도록 수정하면 중복 코드를 최소화 할 수 있다.
+		
+		
+		
+		
 	}
 
 }
