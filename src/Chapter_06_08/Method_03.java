@@ -78,7 +78,11 @@ public class Method_03 {
 //	}
 	
 	
-	
+	// CarExample 클래스의 5라인에서 Car 객체의 setGas(5) 메소드를 호출해서 Car 객체의 gas 필드값을 5로 변경했다.
+	// 7라인에서는 isLeftGas() 메소드를 호출해서 리턴값을 gasState 변수에 저장한다.
+	// 8라인에서 gasState 변수값이 true일 경우 10라인에서 run() 메소드를 호출한다.
+	// 13라인을 보면 if문의 조건식으로 isLeftGas() 메소드 호출이 들거아 있는데, 이것이 가능한 이유는 메소드가 boolean값을 리턴하기 떄문이다.
+	// 리턴값이 true일 경우 if 블록을 실행하고 false일 경우 else 블록을 실행한다.
 	
 	
 }
